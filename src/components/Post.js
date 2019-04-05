@@ -15,7 +15,8 @@ import {
   Image,
   Dimensions,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from 'react-native';
 
 
@@ -49,7 +50,7 @@ export default class Post extends Component {
   }
 
   exibeLegenda(foto) {
-    if(foto.comentario === '')
+    if (foto.comentario === '')
       return;
 
     return (
@@ -65,12 +66,12 @@ export default class Post extends Component {
 
     let novaLista = []
 
-    if(!foto.likeada) {
-      novaLista =  [
+    if (!foto.likeada) {
+      novaLista = [
         ...foto.likers,
-        {login: 'meuUsuario'}
+        { login: 'meuUsuario' }
       ]
-        // foto.likers.concat({login: 'meuUsuario'})
+      // foto.likers.concat({login: 'meuUsuario'})
     } else {
       novaLista = foto.likers.filter(liker => {
         return liker.login !== 'meuUsuario'
@@ -109,6 +110,18 @@ export default class Post extends Component {
 
           {this.exibeLikes(foto.likers)}
           {this.exibeLegenda(foto)}
+
+          {foto.comentarios.map(comentario =>
+            <View style={styles.comentario} key={comentario.id}>
+              <Text style={styles.tituloComentario}>{comentario.login}</Text>
+              <Text>{comentario.texto}</Text>
+            </View>
+          )}
+
+          <View style={styles.novoComentario}>
+          <TextInput style={styles.input} placeholder="Adicione um comentario..." />
+          <Image style={styles.icone} source={require('../../resources/img/send.png')} />
+          </View>
 
         </View>
       </View>
@@ -158,6 +171,24 @@ const styles = StyleSheet.create({
   tituloComentario: {
     fontWeight: 'bold',
     marginRight: 5
+  },
+
+  novoComentario: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd'
+  },
+
+  input: {
+    flex: 1,
+    height: 40,
+    
+  },
+
+  icone: {
+    width: 25,
+    height: 25
   }
 
 });
