@@ -139,6 +139,16 @@ export default class Post extends Component {
             </View>
           )}
 
+          {/* <FlatList
+            data={foto.comentarios}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) =>
+              <View style={styles.comentario}>
+                <Text style={styles.tituloComentario}>{item.login}</Text> 
+                <Text> {item.texto}</Text>
+              </View>
+            } /> */}
+
           <View style={styles.novoComentario}>
             <TextInput style={styles.input}
               placeholder="Adicione um comentario..."
