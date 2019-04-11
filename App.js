@@ -19,10 +19,8 @@ import {
 
 import Post from './src/components/Post.js';
 
+export default class App extends Component {
 
-type Props = {};
-export default class App extends Component<Props> {
-  
   constructor() {
     super();
     this.state = {
@@ -32,21 +30,75 @@ export default class App extends Component<Props> {
 
   componentDidMount() {
     fetch('https://instalura-api.herokuapp.com/api/public/fotos/rafael')
-        .then(resposta => resposta.json())
-        .then(json => this.setState({fotos: json}));
+      .then(resposta => resposta.json())
+      .then(json => this.setState({ fotos: json }));
   }
-  
-  
+
+  like(idFoto) {
+    const foto = this.state.fotos.find(foto => foto.id === idFoto)
+
+    let novaLista = []
+
+    if (!foto.likeada) {
+      novaLista = [
+        ...foto.likers,
+        { login: 'meuUsuario' }
+      ]
+    } else {
+      novaLista = foto.likers.filter(liker => {
+        return liker.login !== 'meuUsuario'
+      })
+    }
+
+    const fotoAtualizada = {
+      ...foto,
+      likeada: !foto.likeada,
+      likers: novaLista
+    }
+
+    const fotos = this.state.fotos
+      .map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
+
+    this.setState({ fotos })
+  }
+
+
+  adicionaComentario(idFoto, valorComentario, inputComentario) {
+    if (valorComentario === '')
+      return;
+
+    const foto = this.state.fotos
+      .find(foto => foto.id === idFoto)
+
+    const novaLista = [...foto.comentarios, {
+      id: valorComentario,
+      login: 'meuUsuario',
+      texto: valorComentario
+    }];
+
+    const fotoAtualizada = {
+      ...foto,
+      comentarios: novaLista
+    }
+
+    const fotos = this.state.fotos
+      .map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
+
+    this.setState({ fotos })
+    inputComentario.clear();
+
+  }
+
+
   render() {
-
     return (
-      //         style={styles.ImagemBulbaBackground}>
-
       <FlatList style={styles.Container}
         keyExtractor={item => String(item.id)}
         data={this.state.fotos}
         renderItem={({ item }) =>
-          <Post foto={item} />
+          <Post foto={item}
+            likeCallback={this.like.bind(this)} 
+            comentarioCallback={this.adicionaComentario.bind(this)} />
         }
       />
     );
@@ -56,7 +108,7 @@ export default class App extends Component<Props> {
 const margem = Platform.OS == 'ios' ? 20 : 0;
 const styles = StyleSheet.create({
 
-  Container : {
+  Container: {
     marginTop: margem
   },
 

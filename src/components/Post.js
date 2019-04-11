@@ -44,54 +44,8 @@ export default class Post extends Component {
     );
   }
 
-  like() {
-    const { foto } = this.state;
-
-    let novaLista = []
-
-    if (!foto.likeada) {
-      novaLista = [
-        ...foto.likers,
-        { login: 'meuUsuario' }
-      ]
-      // foto.likers.concat({login: 'meuUsuario'})
-    } else {
-      novaLista = foto.likers.filter(liker => {
-        return liker.login !== 'meuUsuario'
-      })
-    }
-
-    const fotoAtualizada = {
-      ...foto,
-      likeada: !foto.likeada,
-      likers: novaLista
-    }
-
-    this.setState({ foto: fotoAtualizada })
-  }
-
-  adicionaComentario(valorComentario, inputComentario) {
-    if (valorComentario === '')
-      return;
-
-    const novaLista = [...this.state.foto.comentarios, {
-      id: valorComentario,
-      login: 'meuUsuario',
-      texto: valorComentario
-    }];
-
-    const fotoAtualizada = {
-      ...this.state.foto,
-      comentarios: novaLista
-    }
-
-    this.setState({ foto: fotoAtualizada})
-    inputComentario.clear();
-
-  }
-
   render() {
-    const { foto } = this.state;
+    const { foto, likeCallback, comentarioCallback } = this.props;
     return (
       <View>
 
@@ -105,8 +59,7 @@ export default class Post extends Component {
           style={styles.ImgPost} />
 
         <View style={styles.rodape}>
-          
-          <Likes foto={foto} likeCallback={this.like.bind(this)} />
+          <Likes foto={foto} likeCallback={likeCallback} />
           {this.exibeLegenda(foto)}
 
           {foto.comentarios.map(comentario =>
@@ -116,8 +69,8 @@ export default class Post extends Component {
             </View>
           )}
 
-          <InputComentario
-            comentarioCallback={this.adicionaComentario.bind(this)}
+          <InputComentario idFoto = {foto.id}
+            comentarioCallback={comentarioCallback}
           />
 
         </View>
