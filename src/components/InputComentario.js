@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import {
-    Platform,
     StyleSheet,
-    Text,
     View,
     Image,
-    Dimensions,
-    FlatList,
     TouchableOpacity,
     TextInput
 } from 'react-native';

@@ -8,17 +8,14 @@
 
 import React, { Component } from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
   Image,
   Dimensions,
-  FlatList,
-  TouchableOpacity,
-  TextInput
 } from 'react-native';
 import InputComentario from './InputComentario';
+import Likes from './Likes';
 
 
 const width = Dimensions.get('screen').width
@@ -33,22 +30,6 @@ export default class Post extends Component {
       foto: this.props.foto,
       valorComentario: ''
     }
-  }
-
-  carregaIcone(likeada) {
-    return likeada ? require('../../resources/img/s2-checked.png') :
-      require('../../resources/img/s2.png')
-  }
-
-  exibeLikes(likers) {
-    if (likers.length <= 0)
-      return;
-
-    return (
-      <Text style={styles.likes}>
-        {likers.length} {likers.length > 1 ? 'curtidas' : 'curtida'}
-      </Text>
-    );
   }
 
   exibeLegenda(foto) {
@@ -112,7 +93,6 @@ export default class Post extends Component {
   render() {
     const { foto } = this.state;
     return (
-      //         style={styles.ImagemBulbaBackground}>
       <View>
 
         <View style={styles.Cabecalho} >
@@ -125,12 +105,8 @@ export default class Post extends Component {
           style={styles.ImgPost} />
 
         <View style={styles.rodape}>
-          <TouchableOpacity onPress={this.like.bind(this)}>
-            <Image style={styles.botaoDeLike}
-              source={this.carregaIcone(foto.likeada)} />
-          </TouchableOpacity>
-
-          {this.exibeLikes(foto.likers)}
+          
+          <Likes foto={foto} likeCallback={this.like.bind(this)} />
           {this.exibeLegenda(foto)}
 
           {foto.comentarios.map(comentario =>
@@ -171,18 +147,8 @@ const styles = StyleSheet.create({
     height: width
   },
 
-  botaoDeLike: {
-    width: 40,
-    height: 40,
-    marginBottom: 10
-  },
-
   rodape: {
     margin: 10
-  },
-
-  like: {
-    fontWeight: 'bold'
   },
 
   comentario: {
