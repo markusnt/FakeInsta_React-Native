@@ -39,6 +39,13 @@ export default class App extends Component {
       .find(foto => foto.id === idFoto)
   }
 
+  atulizaFotos(fotoAtualizada) {
+    const fotos = this.state.fotos.map(foto => 
+      foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
+    
+    this.setState({fotos})
+  }
+
   like(idFoto) {
     const foto = this.buscarPorId(idFoto)
 
@@ -61,10 +68,7 @@ export default class App extends Component {
       likers: novaLista
     }
 
-    const fotos = this.state.fotos
-      .map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
-
-    this.setState({ fotos })
+    this.atulizaFotos(fotoAtualizada)
   }
 
 
@@ -86,10 +90,7 @@ export default class App extends Component {
     }
 
 
-    const fotos = this.state.fotos
-      .map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
-
-    this.setState({ fotos })
+    this.atulizaFotos(fotoAtualizada)
     inputComentario.clear();
 
   }
