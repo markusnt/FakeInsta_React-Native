@@ -19,7 +19,6 @@ import Likes from './Likes';
 
 
 const width = Dimensions.get('screen').width
-const height = Dimensions.get('screen').height
 
 export default class Post extends Component {
 

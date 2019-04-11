@@ -1,25 +1,15 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
+  AppRegistry,
   Platform,
   StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
   FlatList
 } from 'react-native';
 
-import Post from './src/components/Post.js';
+import Post from '../components/Post.js';
+import Login from './Login.js';
 
-export default class App extends Component {
+export default class Feed extends Component {
 
   constructor() {
     super();
@@ -40,10 +30,10 @@ export default class App extends Component {
   }
 
   atulizaFotos(fotoAtualizada) {
-    const fotos = this.state.fotos.map(foto => 
+    const fotos = this.state.fotos.map(foto =>
       foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
-    
-    this.setState({fotos})
+
+    this.setState({ fotos })
   }
 
   like(idFoto) {
@@ -103,7 +93,7 @@ export default class App extends Component {
         data={this.state.fotos}
         renderItem={({ item }) =>
           <Post foto={item}
-            likeCallback={this.like.bind(this)} 
+            likeCallback={this.like.bind(this)}
             comentarioCallback={this.adicionaComentario.bind(this)} />
         }
       />
@@ -119,4 +109,7 @@ const styles = StyleSheet.create({
   },
 
 });
+
+// AppRegistry.registerComponent(App, () => Login)
+
 
