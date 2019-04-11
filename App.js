@@ -34,8 +34,13 @@ export default class App extends Component {
       .then(json => this.setState({ fotos: json }));
   }
 
+  buscarPorId(idFoto) {
+    return this.state.fotos
+      .find(foto => foto.id === idFoto)
+  }
+
   like(idFoto) {
-    const foto = this.state.fotos.find(foto => foto.id === idFoto)
+    const foto = this.buscarPorId(idFoto)
 
     let novaLista = []
 
@@ -67,8 +72,7 @@ export default class App extends Component {
     if (valorComentario === '')
       return;
 
-    const foto = this.state.fotos
-      .find(foto => foto.id === idFoto)
+    const foto = this.buscarPorId(idFoto)
 
     const novaLista = [...foto.comentarios, {
       id: valorComentario,
@@ -80,6 +84,7 @@ export default class App extends Component {
       ...foto,
       comentarios: novaLista
     }
+
 
     const fotos = this.state.fotos
       .map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
