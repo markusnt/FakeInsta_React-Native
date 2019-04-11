@@ -9,6 +9,7 @@ import {
     Button,
     AsyncStorage,
 } from 'react-native';
+import CustomInput from '../components/CustomInput';
 
 const width = Dimensions.get('screen').width
 
@@ -53,6 +54,18 @@ export default class Login extends Component {
             .catch(e => this.setState({ mensagem: e.message }))
     }
 
+    logout() {
+        AsyncStorage.removeItem('usuario')
+        AsyncStorage.removeItem('token')
+
+        this.props.navigator.resetTo({
+            screen: {
+                screen:'Login',
+                title: 'Login'
+            }
+        })
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -60,6 +73,16 @@ export default class Login extends Component {
                 <Text style={styles.titulo}> DISNEY </Text>
 
                 <View style={styles.form}>
+
+                    <CustomInput placeholder="Usuarios..."
+                        capitalize="none"
+                        onChange={text => this.setState({ usuario: text })} />
+
+                    <CustomInput placeholder="Senha..."
+                        capitalize="none" 
+                        secure={true}
+                        onChange={text => this.setState({ senha: text })} />
+
                     <TextInput style={styles.input}
                         placeholder="Usuario..."
                         onChangeText={texto => this.setState({ usuario: texto })}
