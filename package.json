@@ -9,6 +9,7 @@
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.3.3",
     "react": "16.8.3",
     "react-native": "0.59.2",
     "react-native-navigation": "^2.17.0"

@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import { Navigation } from 'react-native-navigation';
+
+import CustomInput from '../components/CustomInput';
+
+import Feed from './Feed';
+
 import {
     StyleSheet,
     TextInput,
@@ -9,7 +15,7 @@ import {
     Button,
     AsyncStorage,
 } from 'react-native';
-import CustomInput from '../components/CustomInput';
+
 
 const width = Dimensions.get('screen').width
 
@@ -50,38 +56,61 @@ export default class Login extends Component {
             .then(token => {
                 AsyncStorage.setItem('token', token)
                 AsyncStorage.setItem('usuario', this.state.usuario)
+
+                Navigation.setRoot({
+                    root: {
+                        stack: {
+                            id: 'App',
+                            children: [
+                                {
+                                    component: {
+                                        name: 'Feed',
+                                    }
+                                }
+                            ],
+                        }
+                    }
+                })
             })
             .catch(e => this.setState({ mensagem: e.message }))
     }
 
-    logout() {
-        AsyncStorage.removeItem('usuario')
-        AsyncStorage.removeItem('token')
+    // logout() {
+    //     AsyncStorage.removeItem('usuario')
+    //     AsyncStorage.removeItem('token')
 
-        this.props.navigator.resetTo({
-            screen: {
-                screen:'Login',
-                title: 'Login'
+    //     this.props.navigator.resetTo({
+    //         screen: {
+    //             screen:'Login',
+    //             title: 'Login'
+    //         }
+    //     })
+    // }
+    static get options() {
+        return {
+            topBar: {
+                title: {
+                    text: 'Home'
+                },
             }
-        })
+        };
     }
-
     render() {
         return (
             <View style={styles.container}>
 
-                <Text style={styles.titulo}> DISNEY </Text>
+                <Text style={styles.titulo}> LOGIN </Text>
 
                 <View style={styles.form}>
 
-                    <CustomInput placeholder="Usuarios..."
+                    {/* <CustomInput placeholder="Usuarios..."
                         capitalize="none"
                         onChange={text => this.setState({ usuario: text })} />
 
                     <CustomInput placeholder="Senha..."
                         capitalize="none" 
                         secure={true}
-                        onChange={text => this.setState({ senha: text })} />
+                        onChange={text => this.setState({ senha: text })} /> */}
 
                     <TextInput style={styles.input}
                         placeholder="Usuario..."
@@ -93,7 +122,7 @@ export default class Login extends Component {
                         onChangeText={texto => this.setState({ senha: texto })}
                         secureTextEntry={true} />
 
-                    <Button title='Login'
+                    <Button title='ENTRAR'
                         onPress={this.efetuarLogin.bind(this)} />
 
                 </View>

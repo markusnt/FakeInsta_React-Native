@@ -8,14 +8,14 @@ import { Navigation } from "react-native-navigation";
 import Feed from './src/screens/Feed';
 import Login from './src/screens/Login.js';
 
-Navigation.registerComponent(`navigation.playground.WelcomeScreen`, () => Login);
+Navigation.registerComponent(`Login`, () => Login);
 Navigation.registerComponent(`Feed`, () => Feed);
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
     root: {
       component: {
-        name: "navigation.playground.WelcomeScreen"
+        name: "Login"
       }
     }
   });

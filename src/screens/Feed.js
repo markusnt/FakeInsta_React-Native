@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import Post from '../components/Post.js';
+// import Header from './src/components/Header';
 import Login from './Login.js';
 
 export default class Feed extends Component {
@@ -87,7 +88,9 @@ export default class Feed extends Component {
 
 
   render() {
+    const title = 'Copa do Mundo 2018';
     return (
+      // <Header title={title}/>
       <FlatList style={styles.Container}
         keyExtractor={item => String(item.id)}
         data={this.state.fotos}
