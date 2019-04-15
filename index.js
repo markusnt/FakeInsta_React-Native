@@ -2,15 +2,24 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
-import {name as appName} from './app.json';
+import { Navigation } from "react-native-navigation";
 
 
 import Feed from './src/screens/Feed';
 import Login from './src/screens/Login.js';
 
-AppRegistry.registerComponent(appName, () => Login);
+Navigation.registerComponent(`navigation.playground.WelcomeScreen`, () => Login);
+Navigation.registerComponent(`Feed`, () => Feed);
 
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setRoot({
+    root: {
+      component: {
+        name: "navigation.playground.WelcomeScreen"
+      }
+    }
+  });
+});
 
 
 // https://www.youtube.com/watch?v=8SO-UCHurVc
